@@ -10,6 +10,7 @@ import {
   scan,
   share,
   takeUntil,
+  tap,
   withLatestFrom
 } from "rxjs/operators";
 import * as THREE from "three";
@@ -85,7 +86,13 @@ class Grid {
 class Hanger {
   mesh: THREE.Mesh;
   geometry = new THREE.BoxGeometry(1 * GRID_SIZE, 1 * GRID_SIZE, 1 * GRID_SIZE);
-  material = new THREE.MeshNormalMaterial({ opacity: 0.5, transparent: true });
+  material = new THREE.MeshBasicMaterial({
+    opacity: 0.5,
+    transparent: true,
+    vertexColors: THREE.FaceColors,
+    color: 0xff0000
+    // side: THREE.DoubleSide
+  });
 
   constructor(private editor) {
     // this.translateY(GRID_SIZE / 2);
@@ -102,6 +109,8 @@ class Hanger {
 
   handleMouseOver(intersection) {
     this.material.opacity = 1;
+    (intersection.face as THREE.Face3).color.set(0x00ff00);
+    this.geometry.colorsNeedUpdate = true;
     requestAnimationFrame(this.editor.animate);
     // console.log(intersection);
   }
@@ -149,11 +158,12 @@ class Editor extends React.Component {
       scan(
         (acc, event: MouseEvent): any => {
           acc.x = (event.layerX / 500) * 2 - 1;
-          acc.y = (event.layerY / 500) * 2 - 1;
+          acc.y = (event.layerY / 500) * -2 + 1;
           return acc;
         },
         { x: 0, y: 0 }
-      )
+      ),
+      tap(console.log)
     );
 
     const intersection$ = xy$.pipe(
