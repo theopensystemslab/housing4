@@ -3,8 +3,6 @@ import * as React from "react";
 import { compose } from "recompose";
 
 const data = {
-  global: [["Wall thickness", "wallThickness", "m", 0.3, 0.6, 0.02]],
-  roof: [["Ridge offset", "ridgeOffset", "m", -5, 5, 0.1]],
   external: [
     // ["Wall height", "wallHeight", "m", 0.3, 0.6, 0.1],
     // ["Ridge height", "ridgeHeight", "m", 0.3, 0.6, 0.1],
@@ -12,11 +10,7 @@ const data = {
     ["Width", "width3d", "m", 3, 8, 1],
     ["# Bays", "length", false, 1, 8, 1],
     ["Length", "length3d", "m"],
-    // ["Height", "height3d", "m", 1.2, 4.8, 1.2],
-    ["Left wall height", "leftWallHeight", "m", 2, 5, 1],
-    ["Right wall height", "rightWallHeight", "m", 2, 5, 1],
     ["Footprint", "floorArea", "m2"],
-    ["Roofing area", "roofingArea", "m2"],
     ["Cladding area", "claddingArea", "m2"]
   ],
   internal: [
@@ -25,6 +19,16 @@ const data = {
     ["Wall area", "internalWallArea", "m2"],
     ["Flooring area", "internalFlooringArea", "m2"],
     ["Insulation volume", "insulationVolume", "m3"]
+  ],
+  roof: [
+    ["Ridge height", "height3d", "m", 1.2, 4.8, 1.2],
+    ["Ridge offset", "ridgeOffset", "m", -5, 5, 0.1],
+    ["Roofing area", "roofingArea", "m2"]
+  ],
+  walls: [
+    ["Left wall height", "leftWallHeight", "m", 2, 5, 1],
+    ["Right wall height", "rightWallHeight", "m", 2, 5, 1],
+    ["Thickness", "wallThickness", "m", 0.3, 0.6, 0.02]
   ]
 };
 

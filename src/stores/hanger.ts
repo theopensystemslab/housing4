@@ -2,13 +2,6 @@ import { getParent, types } from "mobx-state-tree";
 
 const Hanger = types
   .model("Hanger", {
-    profile: types.optional(types.array(types.array(types.number)), [
-      [0, 0],
-      [5, 0],
-      [5, 3],
-      [2, 5],
-      [0, 4]
-    ]),
     // width: types.number,
     // height: types.number,
     // length: types.number,
@@ -31,6 +24,15 @@ const Hanger = types
     // maxLength: 7
   })
   .views(self => ({
+    get profile() {
+      return [
+        [0, 0],
+        [self.width, 0],
+        [self.width, self.rightWallHeight],
+        [self.width / 2 + self.ridgeOffset, self.height],
+        [0, self.leftWallHeight]
+      ];
+    },
     get project() {
       return getParent(self);
     },

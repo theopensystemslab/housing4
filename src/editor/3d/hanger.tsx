@@ -1,4 +1,5 @@
 import { groupBy } from "lodash-es";
+import { reaction } from "mobx";
 import { inject, observer } from "mobx-react";
 import * as React from "react";
 import { compose } from "recompose";
@@ -34,10 +35,22 @@ class Hanger extends React.Component<{ scene: THREE.Scene; project: any }> {
   constructor(props) {
     super(props);
 
-    const { width3d, height3d, length3d } = props.project.hanger;
+    const {
+      hanger: { width3d, height3d, length3d, profile }
+    } = props.project;
+
+    // console.log(profile);
+
+    // const p = observable(profile);
+    // autorun(() => console.log(profile));
+    reaction(
+      () => props.project.hanger.profile,
+      profile => console.log(profile),
+      { fireImmediately: true, delay: 200 }
+    );
 
     const shape = new THREE.Shape(
-      props.project.hanger.profile.map(([x, y]) => new THREE.Vector2(x, y))
+      profile.map(([x, y]) => new THREE.Vector2(x, y))
     );
 
     this.geometry = new THREE.ExtrudeBufferGeometry(shape, extrudeSettings);
@@ -46,26 +59,10 @@ class Hanger extends React.Component<{ scene: THREE.Scene; project: any }> {
     this.geometry.translate(0, height3d / 2, 0);
     this.mesh = new THREE.Mesh(this.geometry, this.material);
 
-    // const boxGeometry = new THREE.BoxGeometry(width3d, height3d, length3d);
-    // boxGeometry.translate(0, height3d, 0);
-    // const mesh = new THREE.Mesh(boxGeometry, this.material);
-    // this.mesh.add(mesh);
-
     const edgesGeometry = new THREE.EdgesGeometry(this.geometry, 1);
     const lineSegments = new THREE.LineSegments(edgesGeometry, edgeMaterial);
     this.mesh.add(lineSegments);
-    // geometry.computeFaceNormals();
-    // this.mesh.matrixAutoUpdate = true;
-    // this.mesh.position.setY(GRID_SIZE / 2);
-    // this.mesh.updateMatrixWorld(false);
-    // this.mesh.matrixWorldNeedsUpdate = true;
-    // this.geometry.computeFaceNormals();
-    // this.geometry.computeBoundingSphere();
-    //
-    // const groupedFaces = this.geometry.faces.reduce((acc, curr) => {
-    //   console.log(face);
-    //   return acc;
-    // }, []);
+
     const groupedFaces = groupBy(this.geometry.faces, "materialIndex");
     Object.keys(groupedFaces).forEach(key => {
       const faces = groupedFaces[key];
@@ -93,16 +90,6 @@ class Hanger extends React.Component<{ scene: THREE.Scene; project: any }> {
   render() {
     return null;
   }
-
-  // handleMouseOver(intersection) {
-  //   this.material.opacity = 1;
-  //   intersection.face.surface.focus();
-  //   this.geometry.colorsNeedUpdate = true;
-  // }
-
-  // handleMouseOut() {
-  //   this.material.opacity = 0.5;
-  // }
 }
 
 export default compose(
