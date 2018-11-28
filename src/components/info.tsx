@@ -71,6 +71,11 @@ const Info = compose(
             ))}
           </React.Fragment>
         ))}
+        <tr>
+          <td colSpan={2}>
+            <button>Open in engine →</button>
+          </td>
+        </tr>
       </tbody>
     </table>
   );
