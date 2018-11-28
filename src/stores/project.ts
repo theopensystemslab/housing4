@@ -1,16 +1,36 @@
 import { types } from "mobx-state-tree";
-import Building from "./building";
-import Location from "./location";
+import Hanger from "./hanger";
 
-const Project = types.model("Project", {
-  id: types.identifier,
-  name: types.string,
-  description: types.string,
-  // owner: Team,
-  defaultCurrency: "EUR",
-  location: types.maybe(Location),
-  building: types.maybe(Building)
-});
+const GRID_SIZE = 0.3;
+// const GRID_SIZE_WIDTH = GRID_SIZE;
+// const GRID_SIZE_HEIGHT = GRID_SIZE;
+// const GRID_SIZE_LENGTH = GRID_SIZE * 4;
+
+const Project = types
+  .model("Project", {
+    id: types.identifier,
+    name: types.string,
+    description: types.string,
+    defaultCurrency: "EUR",
+    // owner: Team,
+    // location: types.maybe(Location),
+    // building: types.maybe(Building),
+    hanger: Hanger
+  })
+  .views(self => ({
+    get gridSize() {
+      return GRID_SIZE;
+    },
+    get gridSizeWidth() {
+      return GRID_SIZE;
+    },
+    get gridSizeHeight() {
+      return GRID_SIZE;
+    },
+    get gridSizeLength() {
+      return GRID_SIZE * 4;
+    }
+  }));
 
 export default Project;
 
