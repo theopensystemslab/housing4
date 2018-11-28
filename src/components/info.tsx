@@ -31,7 +31,7 @@ const Info = compose(
 )(({ project }) => {
   const p = project.toJSON();
   return (
-    <table>
+    <table id="info">
       <tbody>
         {/* {Object.keys(p).map(key => (
           <tr key={key}>

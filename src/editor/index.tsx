@@ -186,7 +186,7 @@ class Editor extends React.Component<{ project; scene: THREE.Scene }> {
     return (
       <div
         ref={el => (this.container = el)}
-        style={{ width: this.width, height: this.height }}
+        style={{ width: "100%", height: "100vh" }}
       >
         <Grid size={100} />
         <Hanger />
