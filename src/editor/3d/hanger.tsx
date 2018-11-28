@@ -42,9 +42,14 @@ class Hanger extends React.Component<{ scene: THREE.Scene; project: any }> {
 
     this.geometry = new THREE.ExtrudeBufferGeometry(shape, extrudeSettings);
     // console.log(shape);
-    // this.geometry = new THREE.BoxGeometry(width3d, height3d, length3d);
+
     this.geometry.translate(0, height3d / 2, 0);
     this.mesh = new THREE.Mesh(this.geometry, this.material);
+
+    // const boxGeometry = new THREE.BoxGeometry(width3d, height3d, length3d);
+    // boxGeometry.translate(0, height3d, 0);
+    // const mesh = new THREE.Mesh(boxGeometry, this.material);
+    // this.mesh.add(mesh);
 
     const edgesGeometry = new THREE.EdgesGeometry(this.geometry, 1);
     const lineSegments = new THREE.LineSegments(edgesGeometry, edgeMaterial);

@@ -81,7 +81,12 @@ const Info = compose(
         ))}
         <tr>
           <td colSpan={2}>
-            <button>Open in engine →</button>
+            <button
+              onClick={project.updateSpreadSheet}
+              disabled={project.state === "updating"}
+            >
+              {project.buttonText}
+            </button>
           </td>
         </tr>
       </tbody>
