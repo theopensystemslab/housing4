@@ -1,11 +1,6 @@
 import { types } from "mobx-state-tree";
 import Hanger from "./hanger";
 
-const GRID_SIZE = 0.3;
-// const GRID_SIZE_WIDTH = GRID_SIZE;
-// const GRID_SIZE_HEIGHT = GRID_SIZE;
-// const GRID_SIZE_LENGTH = GRID_SIZE * 4;
-
 const Project = types
   .model("Project", {
     id: types.identifier,
@@ -19,16 +14,16 @@ const Project = types
   })
   .views(self => ({
     get gridSize() {
-      return GRID_SIZE;
+      return 0.3;
     },
     get gridSizeWidth() {
-      return GRID_SIZE;
+      return self.gridSize;
     },
     get gridSizeHeight() {
-      return GRID_SIZE;
+      return self.gridSize;
     },
     get gridSizeLength() {
-      return GRID_SIZE * 4;
+      return self.gridSize * 4;
     }
   }));
 

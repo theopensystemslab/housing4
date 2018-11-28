@@ -23,7 +23,7 @@ class Editor extends React.Component<{ project; scene: THREE.Scene }> {
   private camera;
   private container: HTMLDivElement;
   private debugPlane;
-  private hanger;
+  // private hanger;
   private intersection;
   private normal;
   private orbitControls: THREE.OrbitControls;
@@ -31,7 +31,6 @@ class Editor extends React.Component<{ project; scene: THREE.Scene }> {
   private planeIntersection = new THREE.Vector3();
   private raycaster = new THREE.Raycaster();
   private renderer = new THREE.WebGLRenderer({ antialias: true });
-  // private scene = new THREE.Scene();
   private height = 500;
   private width = 500;
 
@@ -51,9 +50,6 @@ class Editor extends React.Component<{ project; scene: THREE.Scene }> {
     this.debugPlane = DebugPlane(false);
     this.props.scene.add(this.debugPlane);
 
-    this.hanger = new Hanger(this);
-    this.props.scene.add(this.hanger.mesh);
-
     const throttleToAnimationFrame = throttleTime(0, animationFrameScheduler);
 
     const mouseMove$ = fromEvent(domElement, "mousemove").pipe(
@@ -72,7 +68,7 @@ class Editor extends React.Component<{ project; scene: THREE.Scene }> {
 
     mouseUp$.subscribe(() => {
       this.orbitControls.enabled = true;
-      this.hanger.surfaces.forEach(s => s.resetOriginalVertices());
+      // this.hanger.surfaces.forEach(s => s.resetOriginalVertices());
     });
 
     merge(mouseMove$, wheel$).subscribe(() => {
@@ -93,15 +89,16 @@ class Editor extends React.Component<{ project; scene: THREE.Scene }> {
     const intersection$ = xy$.pipe(
       map(xy => {
         this.raycaster.setFromCamera(xy, this.camera);
-        return this.raycaster.intersectObject(this.hanger.mesh);
+        return [];
+        // return this.raycaster.intersectObject(this.hanger.mesh);
       }),
       share()
     );
     intersection$.subscribe(intersections => {
       if (intersections.length > 0) {
-        this.hanger.handleMouseOver(intersections[0]);
+        // this.hanger.handleMouseOver(intersections[0]);
       } else {
-        this.hanger.handleMouseOut();
+        // this.hanger.handleMouseOut();
       }
     });
 
@@ -192,6 +189,7 @@ class Editor extends React.Component<{ project; scene: THREE.Scene }> {
         style={{ width: this.width, height: this.height }}
       >
         <Grid size={100} />
+        <Hanger />
       </div>
     );
   }

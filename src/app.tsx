@@ -13,9 +13,11 @@ const project = Project.create({
   description: "Tiny House",
   defaultCurrency: "EUR",
   hanger: {
-    width: 5,
-    height: 5,
-    length: 10
+    left: -3,
+    right: 3,
+    front: 1,
+    back: -1,
+    height: 4
   }
   // location: Location.create({
   //   countryCode: "NL",
