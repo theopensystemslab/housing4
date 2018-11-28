@@ -2,6 +2,13 @@ import { getParent, types } from "mobx-state-tree";
 
 const Hanger = types
   .model("Hanger", {
+    profile: types.optional(types.array(types.array(types.number)), [
+      [0, 0],
+      [5, 0],
+      [5, 3],
+      [2, 5],
+      [0, 4]
+    ]),
     // width: types.number,
     // height: types.number,
     // length: types.number,
@@ -10,7 +17,10 @@ const Hanger = types
     right: types.number,
     front: types.number,
     back: types.number,
-    height: types.number,
+    height: types.number, // ridgeHeight
+    leftWallHeight: 3,
+    rightWallHeight: 4,
+    ridgeOffset: 0,
     wallThickness: 0.4
 
     // minWidth: 3,

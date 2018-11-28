@@ -7,9 +7,9 @@ export default function Controls(camera, domElement) {
   controls.enableDamping = true;
   controls.enableKeys = false;
   controls.enableZoom = true;
-  controls.maxDistance = 200;
+  controls.maxDistance = 30;
   controls.maxPolarAngle = Math.PI / 2 - 0.15;
-  controls.minDistance = 4;
+  controls.minDistance = 15;
   controls.minPolarAngle = 0.1;
   (controls as any).panSpeed = 0.2;
   controls.rotateSpeed = 0.4;

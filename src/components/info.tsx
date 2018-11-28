@@ -4,14 +4,17 @@ import { compose } from "recompose";
 
 const data = {
   global: [["Wall thickness", "wallThickness", "m", 0.3, 0.6, 0.02]],
+  roof: [["Ridge offset", "ridgeOffset", "m", -5, 5, 0.1]],
   external: [
     // ["Wall height", "wallHeight", "m", 0.3, 0.6, 0.1],
     // ["Ridge height", "ridgeHeight", "m", 0.3, 0.6, 0.1],
     // ["Ridge offset", "ridgeHeight", "m", 0.3, 0.6, 0.1],
-
     ["Width", "width3d", "m", 3, 8, 1],
-    ["Length", "length3d", "m", 1.2, 12, 1.2],
+    ["# Bays", "length", false, 1, 8, 1],
+    ["Length", "length3d", "m"],
     // ["Height", "height3d", "m", 1.2, 4.8, 1.2],
+    ["Left wall height", "leftWallHeight", "m", 2, 5, 1],
+    ["Right wall height", "rightWallHeight", "m", 2, 5, 1],
     ["Footprint", "floorArea", "m2"],
     ["Roofing area", "roofingArea", "m2"],
     ["Cladding area", "claddingArea", "m2"]
@@ -52,7 +55,11 @@ const Info = compose(
                 <th>
                   {d[0]} <span className="unit">{d[2]}</span>
                 </th>
-                <td>{project.hanger[d[1]].toFixed(2)}</td>
+                <td>
+                  {d[2]
+                    ? project.hanger[d[1]].toFixed(2)
+                    : project.hanger[d[1]]}
+                </td>
                 {d[3] && (
                   <td>
                     <input
@@ -60,10 +67,11 @@ const Info = compose(
                       min={d[3]}
                       max={d[4]}
                       step={d[5]}
-                      value={project.hanger[d[6] ? d[6] : d[1]]}
-                      onChange={e =>
-                        project.hanger.adjust(d[1], Number(e.target.value))
-                      }
+                      value={project.hanger[d[1]]}
+                      onChange={e => {
+                        const fn = d[6] ? d[6] : Number;
+                        project.hanger.adjust(d[1], fn(e.target.value));
+                      }}
                     />
                   </td>
                 )}
