@@ -12,6 +12,7 @@ export default function Grid({ size }) {
           new THREE.Color(0xdddddd),
           new THREE.Color(0xdddddd)
         );
+        o.position.y = -0.005;
         // o.position.x = project.gridSize / 2;
         return o;
       }}

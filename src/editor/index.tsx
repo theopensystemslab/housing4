@@ -52,7 +52,7 @@ class Editor extends React.Component<{ project; scene: THREE.Scene }> {
 
     const throttleToAnimationFrame = throttleTime(0, animationFrameScheduler);
 
-    const mouseMove$ = fromEvent(domElement, "mousemove").pipe(
+    const mouseMove$ = fromEvent(document, "mousemove").pipe(
       throttleToAnimationFrame,
       share()
     );

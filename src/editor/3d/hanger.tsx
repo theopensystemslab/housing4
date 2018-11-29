@@ -6,12 +6,6 @@ import { compose } from "recompose";
 import * as THREE from "three";
 import Surface from "./surface";
 
-const extrudeSettings = {
-  depth: 10,
-  steps: 1,
-  bevelEnabled: false
-};
-
 const edgeMaterial = new THREE.LineBasicMaterial({
   color: 0x000000,
   linewidth: 1,
@@ -36,32 +30,48 @@ class Hanger extends React.Component<{ scene: THREE.Scene; project: any }> {
     super(props);
 
     const {
-      hanger: { width3d, height3d, length3d, profile }
+      hanger: { width3d, height3d, length, profile }
     } = props.project;
 
     // console.log(profile);
 
     // const p = observable(profile);
     // autorun(() => console.log(profile));
-    reaction(
-      () => props.project.hanger.profile,
-      profile => console.log(profile),
-      { fireImmediately: true, delay: 200 }
-    );
 
-    const shape = new THREE.Shape(
-      profile.map(([x, y]) => new THREE.Vector2(x, y))
-    );
+    let shape;
+    let lineSegments;
 
-    this.geometry = new THREE.ExtrudeBufferGeometry(shape, extrudeSettings);
-    // console.log(shape);
+    const handleChange = () => {
+      const extrudeSettings = {
+        depth: props.project.hanger.length,
+        steps: 1,
+        bevelEnabled: false
+      };
 
-    this.geometry.translate(0, height3d / 2, 0);
-    this.mesh = new THREE.Mesh(this.geometry, this.material);
+      shape = new THREE.Shape(
+        props.project.hanger.profile.map(([x, y]) => new THREE.Vector2(x, y))
+      );
+      if (this.geometry) {
+        this.geometry.dispose();
+        this.mesh.remove(lineSegments);
+      } else {
+        this.mesh = new THREE.Mesh(this.geometry, this.material);
+      }
+      this.geometry = new THREE.ExtrudeBufferGeometry(shape, extrudeSettings);
+      this.geometry.translate(0, 0, -props.project.hanger.length / 2);
+      this.mesh.geometry = this.geometry;
+      const edgesGeometry = new THREE.EdgesGeometry(this.geometry, 1);
+      lineSegments = new THREE.LineSegments(edgesGeometry, edgeMaterial);
 
-    const edgesGeometry = new THREE.EdgesGeometry(this.geometry, 1);
-    const lineSegments = new THREE.LineSegments(edgesGeometry, edgeMaterial);
-    this.mesh.add(lineSegments);
+      this.mesh.add(lineSegments);
+    };
+
+    reaction(() => props.project.hanger.profile, handleChange, {
+      fireImmediately: true,
+      delay: 100
+    });
+
+    reaction(() => props.project.hanger.bayCount, handleChange, { delay: 100 });
 
     const groupedFaces = groupBy(this.geometry.faces, "materialIndex");
     Object.keys(groupedFaces).forEach(key => {

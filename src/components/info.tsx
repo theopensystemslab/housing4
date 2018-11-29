@@ -7,9 +7,9 @@ const data = {
     // ["Wall height", "wallHeight", "m", 0.3, 0.6, 0.1],
     // ["Ridge height", "ridgeHeight", "m", 0.3, 0.6, 0.1],
     // ["Ridge offset", "ridgeHeight", "m", 0.3, 0.6, 0.1],
-    ["Width", "width3d", "m", 3, 8, 1],
-    ["# Bays", "length", false, 1, 8, 1],
-    ["Length", "length3d", "m"],
+    ["Width", "width", "m", 3, 5.4, 0.6],
+    ["# Bays", "bayCount", false, 1, 8, 1],
+    ["Length", "length", "m"],
     ["Footprint", "floorArea", "m2"],
     ["Cladding area", "claddingArea", "m2"]
   ],
@@ -21,13 +21,13 @@ const data = {
     ["Insulation volume", "insulationVolume", "m3"]
   ],
   roof: [
-    ["Ridge height", "height3d", "m", 1.2, 4.8, 1.2],
+    ["Ridge height", "ridgeHeight", "m", 1.2, 5.4, 0.1],
     ["Ridge offset", "ridgeOffset", "m", -5, 5, 0.1],
     ["Roofing area", "roofingArea", "m2"]
   ],
   walls: [
-    ["Left wall height", "leftWallHeight", "m", 2, 5, 1],
-    ["Right wall height", "rightWallHeight", "m", 2, 5, 1],
+    ["Left wall height", "leftWallHeight", "m", 2, 5, 0.2],
+    ["Right wall height", "rightWallHeight", "m", 2, 5, 0.2],
     ["Thickness", "wallThickness", "m", 0.3, 0.6, 0.02]
   ]
 };
